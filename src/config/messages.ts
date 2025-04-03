@@ -1,0 +1,13 @@
+export const MISSING_ENV_VARIABLES = '❌ missing environment variables'
+export const ALL_PROVIDERS_FAILED = '❌ All email providers failed'
+export const EMAIL_FIELD_MISSING = '❌ Email field is missing'
+export const TEMPLATE_NOT_FOUND = '❌ Template not found'
+export const EMAIL_SENT = ' ✅ Email sent successfully'
+export const EMAIL_ERROR = '❌ Error while sending email'
+export const PROVIDER_ERROR = 'Email provider not supported'
+export const DELIVERING_MESSAGE = `📩 Delivering Message...`
+export const ENQUEUE_MAIL = '📩 sending mail to the queue...'
+export const EMAIL_SENT_TO_QUEUE = 'All providers failed, 📩 Email sent to the queue...'
+export const GENERIC_ERROR = '❌ Something went wrong...'
+export const PROCESSING_EMAIL_QUEUE = '📩 Starting email queue process...'
+export const EMAIL_SENT_FROM_QUEUE = 'Email sent from queue 🚶‍♂️🚶‍♂️ TO:'
