@@ -1,29 +1,23 @@
 import { Request, Response } from "express";
 import { EMAIL_ERROR, EMAIL_SENT } from "../config/messages";
-import { EmailService } from "../services/EmailService";
+import { BotService } from "../services/BotService";
 
-export class UserController {
-  private emailService: EmailService;
+export class BotController {
+  private botService: BotService;
 
-  constructor(emailService: EmailService) {
-    this.emailService = emailService;
+  constructor(botService: BotService) {
+    this.botService = botService;
   }
 
-  public async registerUser(req: Request, res: Response): Promise<void> {
-    const { name, email } = req.body;
+  public async execute(req: Request, res: Response): Promise<void> {
+    
     try {
-      // do something else here like saving the user to a database
-      // const newUser = new User({ name, email });
-      // await newUser.save();
+      // so far we'll do all in the same instruction but the idea is to split it into steps 
+      await this.botService.execute();
 
-      // send welcome email TODO: try with another provider if there is no service
-      const response = await this.emailService.sendMail();
-
-      if(!response)  throw new Error("Email service is not available");
-
-      res.status(201).json({ message: `${EMAIL_SENT} TO ${email} - ${name}` });
+      res.status(201).json({ message: `✅ bot executed successfully` });
     } catch (error) {
-      res.status(500).json({ error: `${EMAIL_ERROR}:${error}` });
+      res.status(500).json({ error: `❌ error while executing the bot - ${error}`  });
     }
   }
 }
