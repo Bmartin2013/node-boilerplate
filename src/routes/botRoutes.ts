@@ -1,7 +1,7 @@
 import express from "express";
 import { BOT_EXECUTE } from "../config/endpoints";
 import { BotService } from "../services/BotService";
-import { BotController } from "../controllers/userController";
+import { BotController } from "../controllers/BotController";
 
 const botRoutes = express.Router();
 const botService = new BotService();
