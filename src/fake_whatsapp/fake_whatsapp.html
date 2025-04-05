@@ -39,8 +39,14 @@
         cursor: pointer;
       }
 
-      .exp-sidebar {
+      .visible {
+        display: block;
+      }
+      .hidden {
         display: none;
+      }
+
+      .exp-sidebar {
         position: fixed;
         top: 0;
         left: 5%;
@@ -75,32 +81,32 @@
     <div class="chat-container">
       <div class="sidebar">
         <!-- Botones de navegación -->
-        <button id="message-icon" class="icon x78zum5 x6s0dn4 x1afcbsf x1heor9g x1y1aw1k x1sxyh0 xwib8y2 xurb0ha" title="Mensajes">💬</button>
-        <button id="state-icon" class="icon x78zum5 x6s0dn4 x1afcbsf x1heor9g x1y1aw1k x1sxyh0 xwib8y2 xurb0ha" title="Mi estado">🌀</button>
-        <button id="channel-icon" class="icon x78zum5 x6s0dn4 x1afcbsf x1heor9g x1y1aw1k x1sxyh0 xwib8y2 xurb0ha" title="Canales">📺</button>
-        <button id="community-icon" class="icon x78zum5 x6s0dn4 x1afcbsf x1heor9g x1y1aw1k x1sxyh0 xwib8y2 xurb0ha" title="Comunidades">🧑‍🧑‍🧒‍🧒</button>
+        <button id="message-icon" class="icon x1afcbsf x1heor9g x1y1aw1k x1sxyh0 xwib8y2 xurb0ha xxk0z11 xvy4d1p x78zum5 xl56j7k x6s0dn4" title="Mensajes">💬</button>
+        <button id="state-icon" class="icon x1afcbsf x1heor9g x1y1aw1k x1sxyh0 xwib8y2 xurb0ha xxk0z11 xvy4d1p x78zum5 xl56j7k x6s0dn4" title="Mi estado">🌀</button>
+        <button id="channel-icon" class="icon x1afcbsf x1heor9g x1y1aw1k x1sxyh0 xwib8y2 xurb0ha xxk0z11 xvy4d1p x78zum5 xl56j7k x6s0dn4" title="Canales">📺</button>
+        <button id="community-icon" class="icon x1afcbsf x1heor9g x1y1aw1k x1sxyh0 xwib8y2 xurb0ha xxk0z11 xvy4d1p x78zum5 xl56j7k x6s0dn4" title="Comunidades">🧑‍🧑‍🧒‍🧒</button>
 
         <!-- Sidebar expandida -->
-        <div id="expanded-sidebar" class="exp-sidebar">
+        <div id="expanded-sidebar" class="exp-sidebar hidden" >
           <div id="page-1">
             <h3>Comunidades</h3>
             <div id="add-community" class="community-element">
               <div id="community-icon" style="font-size: 2em">🧑‍🧑‍🧒‍🧒</div>
               <p style="margin-left: 10px">Nueva comunidad</p>
             </div>
-            <div class="community-element" id="community-1">
+            <div class="community-element x1iyjqo2 x6ikm8r x10wlt62 x1n2onr6 xlyipyv xuxw1ft xk50ysn _ao3e" id="community-1">
               <div id="community-icon" style="font-size: 2em; cursor: pointer">🧑‍🧑‍🧒‍🧒</div>
               <p style="margin-left: 10px; cursor: pointer">Besties</p>
             </div>
           </div>
 
-          <div id="page-2" style="display: none">
-            <div id="besties-info" style="display: none; margin-top: 20px">
+          <div id="page-2" >
+            <div id="besties-info" style="margin-top: 20px" class="hidden">
               <div class="community-header">
                 <h3>Besties</h3>
-                <button id="community-options" style="background: none; border: none" title="opciones" class="_ajv7 x1n2onr6 x1okw0bk x5yr21d x14yjl9h xudhj91 x18nykt9 xww2gxu xlkovuz x16j0l1c x17adc0v xyklrzc">⛭</button>
-                <div id="options-menu" style="display: none; position: absolute; top: 40px; right: 10px; background: white; border: 1px solid #ccc; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); padding: 10px; z-index: 1000">
-                  <ul style="list-style: none; margin: 0; padding: 0">
+                <button id="community-options" style="background: none; border: none" title="opciones" class="x78zum5 x6s0dn4 x1afcbsf x1heor9g x1y1aw1k x1sxyh0 xwib8y2 xurb0ha">⛭</button>
+                <div id="options-menu"  class="hidden" style="position: absolute; top: 40px; right: 10px; background: white; border: 1px solid #ccc; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); padding: 10px; z-index: 1000">
+                  <ul  class="_ak4w _ak4x" style="list-style: none; margin: 0; padding: 0">
                     <li class="_aj-r _aj-q _aj-_" style="padding: 5px 0; cursor: pointer; color:gainsboro;">Info de la comunidad</li>
                     <li id="view-members" class="_aj-r _aj-q _aj-_" style="padding: 5px 0; cursor: pointer">Ver Miembros</li>
                     <li class="_aj-r _aj-q _aj-_" style="padding: 5px 0; cursor: pointer; color:gainsboro;">Ajustes de la comunidad</li>
@@ -112,40 +118,41 @@
         </div>
 
         <!-- Modal de miembros -->
-        <div id="members-modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border: 1px solid #ccc; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); padding: 20px; z-index: 2000; width: 300px">
-          <div id="page-3" class="x15g3fpr x78zum5 xdt5ytf x5yr21d x17qophe x6ikm8r x10wlt62 x67bb7w x10l6tqk x13vifvy xh8yej3">
+        <div id="members-modal" class="hidden" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border: 1px solid #ccc; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); padding: 20px; z-index: 2000; width: 300px">
+          <div id="page-3" class="x15g3fpr x78zum5 xdt5ytf x5yr21d x17qophe x6ikm8r x10wlt62 x67bb7w x10l6tqk x13vifvy xh8yej3 xnpuxes">
             <h3>Miembros</h3>
-          <div id="member-element-link" class="community-element _alzk">
+          <div id="member-element-link" class="community-element _alzb x1qafhyn x178xt8z x13fuv20 xyj1x25">
             <div id="community-icon" style="font-size: 2em">⛓️‍💥</div>
             <p style="margin-left: 10px; color:gainsboro;">Enlace de invitacion a la comunidad</p>
           </div>
-          <div class="community-element _alzk" id="member-add">
+          <div class="community-element _alzb x1qafhyn x178xt8z x13fuv20 xyj1x25" id="member-add">
             <div id="community-icon" style="font-size: 2em; cursor: pointer">🧑‍🧑‍🧒‍🧒</div>
             <p style="margin-left: 10px; cursor: pointer">Anadir miembros</p>
           </div>
-          <div class="community-element _alzk" id="other-option">
+          <div class="community-element _alzb x1qafhyn x178xt8z x13fuv20 xyj1x25" id="other-option">
             <div id="community-icon" style="font-size: 2em; cursor: pointer">🧑‍🧑‍🧒‍🧒</div>
             <p style="margin-left: 10px; cursor: pointer; color:gainsboro;">otra opcion</p>
           </div>
           </div>
-          <div id="page-4" style="display: none;" class="x15g3fpr x78zum5 xdt5ytf x5yr21d x17qophe x6ikm8r x10wlt62 x67bb7w x10l6tqk x13vifvy xh8yej3">
+          <div id="page-4" class="x15g3fpr x78zum5 xdt5ytf x5yr21d x17qophe x6ikm8r x10wlt62 x67bb7w x10l6tqk x13vifvy xh8yej3 xnpuxes">
             <h3>Agregar miembro</h3>
             <div style="margin-bottom: 20px;">
               <input
+              class ="x9f619 x78zum5 x6s0dn4 x1s1d1n7 xqmdsaz x1lj6vcq x1bmedo x1lq5wgf xgqcy7u x30kzoy x9jhf4c"
                 type="text"
                 id="search-member"
-                placeholder="Buscar miembro..."
+                placeholder="Busca un nombre o numero"
                 style="width: 90%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;"
               />
             </div>
             <h4>Contactos</h4>
             <div id="contact-1" class="community-element  x10l6tqk xh8yej3 x1g42fcv">
-              <input type="checkbox" id="contact-checkbox" class="_ak72 false _ak73 _ak75" style="width: 20px; height: 20px; margin-right: 10px; cursor: pointer;" />
+              <input type="checkbox" id="contact-checkbox" data-icon="checkmark-medium" class="x10l6tqk x8zc4e7 x11uqc5h x78zum5 x6s0dn4 x5yr21d x47corl" style="width: 20px; height: 20px; margin-right: 10px; cursor: pointer;" />
               <div id="community-icon" style="font-size: 2em">🧑‍🧑‍🧒‍🧒</div>
               <p style="margin-left: 10px">Mi Contacto</p>
             </div>
           <div style="text-align: right; margin-top: 20px;">
-            <button id="submit-member"  class="x78zum5 x6s0dn4 xl56j7k xexx8yu x4uap5 x18d9i69 xkhd6sd x1f6kntn xk50ysn x7o08j2 xtvhhri x1rluvsa x14yjl9h xudhj91 x18nykt9 xww2gxu xu306ak x12s1jxh xkdsq27 xwwtwea x1gfkgh9 x1247r65 xng8ra" style="padding: 10px 20px; font-size: 16px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            <button id="submit-member" aria-label="Confirmar" class="x78zum5 x6s0dn4 xl56j7k xexx8yu x4uap5 x18d9i69 xkhd6sd x1f6kntn xk50ysn x7o08j2 xtvhhri x1rluvsa x14yjl9h xudhj91 x18nykt9 xww2gxu xu306ak x12s1jxh xkdsq27 xwwtwea x1gfkgh9 x1247r65 xng8ra" style="padding: 10px 20px; font-size: 16px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
               Submit
             </button>
           </div>
@@ -154,81 +161,98 @@
 
       </div>
 
-    <script>
-      const addMembersElement = document.getElementById("member-add");
-      const addMembersModal = document.getElementById("add-members-modal");
-      const page3 = document.getElementById("page-3");
-      const page4 = document.getElementById("page-4");
-
-      addMembersElement.addEventListener("click", () => {
-        page3.style.display = "none"; // Hide page-3
-        page4.style.display = "block"; // Show page-4
-      });
-
-      document.addEventListener("click", (event) => {
-        if (
-          !addMembersModal.contains(event.target) &&
-          event.target !== addMembersElement &&
-          addMembersModal.style.display === "block"
-        ) {
-          addMembersModal.style.display = "none";
-        }
-      });
-
-      const communityIcon = document.getElementById("community-icon");
-      const expandedSidebar = document.getElementById("expanded-sidebar");
-      // const closeSidebar = document.getElementById("close-sidebar");
-
-      communityIcon.addEventListener("click", () => {
-        expandedSidebar.style.display = "block";
-      });
-
-      const bestiesButton = document.getElementById("community-1");
-      const bestiesInfo = document.getElementById("besties-info");
-      const page1 = document.getElementById("page-1");
-      const page2 = document.getElementById("page-2");
-
-      bestiesButton.addEventListener("click", () => {
-        page1.style.display = "none"; // Hide page-1
-        page2.style.display = "block"; // Ensure page-2 is visible
-        bestiesInfo.style.display =
-          bestiesInfo.style.display === "none" ? "block" : "none";
-      });
-
-      const closeSidebarButton = document.getElementById("community-options");
-      const optionsMenu = document.getElementById("options-menu");
-
-      closeSidebarButton.addEventListener("click", () => {
-        optionsMenu.style.display =
-          optionsMenu.style.display === "none" ? "block" : "none";
-      });
-
-      document.addEventListener("click", (event) => {
-        if (
-          !closeSidebarButton.contains(event.target) &&
-          !optionsMenu.contains(event.target)
-        ) {
-          optionsMenu.style.display = "none";
-        }
-      });
-
-      const viewMembersOption = document.getElementById("view-members");
-      const membersModal = document.getElementById("members-modal");
-
-      viewMembersOption.addEventListener("click", () => {
-        membersModal.style.display = "block";
-      });
-
-      document.addEventListener("click", (event) => {
-        if (
-          !membersModal.contains(event.target) &&
-          event.target !== viewMembersOption &&
-          membersModal.style.display === "block"
-        ) {
-          membersModal.style.display = "none";
-        }
-      });
-
-    </script>
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const toggleVisibility = (element, forceState = null) => {
+            if (!element) return;
+            if (forceState === "show") {
+              element.classList.remove("hidden");
+              element.classList.add("visible");
+            } else if (forceState === "hide") {
+              element.classList.remove("visible");
+              element.classList.add("hidden");
+            } else {
+              element.classList.toggle("hidden");
+              element.classList.toggle("visible");
+            }
+          };
+      
+          // Sidebar expand
+          const communityIconBtn = document.querySelector("#community-icon.icon");
+          const expandedSidebar = document.getElementById("expanded-sidebar");
+          if (communityIconBtn && expandedSidebar) {
+            communityIconBtn.addEventListener("click", () => {
+              toggleVisibility(expandedSidebar);
+            });
+          }
+      
+          // Ir a Besties info
+          const bestiesButton = document.getElementById("community-1");
+          const bestiesInfo = document.getElementById("besties-info");
+          const page1 = document.getElementById("page-1");
+          const page2 = document.getElementById("page-2");
+      
+          if (bestiesButton) {
+            bestiesButton.addEventListener("click", () => {
+              toggleVisibility(page1, "hide");
+              toggleVisibility(page2, "show");
+              toggleVisibility(bestiesInfo);
+            });
+          }
+      
+          // Mostrar menú de opciones
+          const closeSidebarButton = document.getElementById("community-options");
+          const optionsMenu = document.getElementById("options-menu");
+      
+          if (closeSidebarButton && optionsMenu) {
+            closeSidebarButton.addEventListener("click", (e) => {
+              e.stopPropagation(); // Para evitar que se cierre inmediatamente
+              toggleVisibility(optionsMenu);
+            });
+      
+            document.addEventListener("click", (event) => {
+              if (
+                !closeSidebarButton.contains(event.target) &&
+                !optionsMenu.contains(event.target)
+              ) {
+                toggleVisibility(optionsMenu, "hide");
+              }
+            });
+          }
+      
+          // Ver miembros (abre modal)
+          const viewMembersOption = document.getElementById("view-members");
+          const membersModal = document.getElementById("members-modal");
+      
+          if (viewMembersOption && membersModal) {
+            viewMembersOption.addEventListener("click", () => {
+              membersModal.style.display = "block";
+            });
+      
+            document.addEventListener("click", (event) => {
+              if (
+                !membersModal.contains(event.target) &&
+                event.target !== viewMembersOption &&
+                membersModal.style.display === "block"
+              ) {
+                membersModal.style.display = "none";
+              }
+            });
+          }
+      
+          // Pasar a pantalla de agregar miembros
+          const addMembersElement = document.getElementById("member-add");
+          const page3 = document.getElementById("page-3");
+          const page4 = document.getElementById("page-4");
+      
+          if (addMembersElement && page3 && page4) {
+            addMembersElement.addEventListener("click", () => {
+              toggleVisibility(page3, "hide");
+              toggleVisibility(page4, "show");
+            });
+          }
+        });
+      </script>
+      
   </body>
 </html>
