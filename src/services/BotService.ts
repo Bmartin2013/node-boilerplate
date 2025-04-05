@@ -8,7 +8,10 @@ export class BotService {
   async iniciarNavegador(): Promise<void> {
     this.driver = await new Builder().forBrowser("chrome").build();
     await this.driver.get(DRIVER_URL);
-    await this.driver.wait(until.elementLocated(By.id("community-icon")), 10000);
+    await this.driver.wait(
+      until.elementLocated(By.id("community-icon")),
+      10000
+    );
     escribirLog("✅ WhatsApp Web listo.");
   }
 
@@ -16,7 +19,7 @@ export class BotService {
     if (!this.driver) throw new Error("Driver no inicializado.");
     escribirLog(`🔎 Abriendo comunidad: ${COMUNIDAD}`);
 
-    await this.driver.sleep(4000);
+    await this.driver.sleep(3000);
     await this.driver.executeScript(`
       const icon = document.getElementById('community-icon');
       if (icon) icon.click();
@@ -24,11 +27,15 @@ export class BotService {
 
     await this.driver.sleep(1000);
 
-    const comunidadElemento = await this.driver.findElement(By.id("community-1"));
+    const comunidadElemento = await this.driver.findElement(
+      By.id("community-1")
+    );
     await comunidadElemento.click();
     await this.driver.sleep(1000);
 
-    const opcionesBtn = await this.driver.findElement(By.id("community-options"));
+    const opcionesBtn = await this.driver.findElement(
+      By.id("community-options")
+    );
     await opcionesBtn.click();
     await this.driver.sleep(1000);
 
@@ -47,13 +54,19 @@ export class BotService {
       try {
         escribirLog(`➕ Agregando usuario: ${numero} (Intento ${intento})`);
         const input = await this.driver.findElement(By.id("search-member"));
-        await input.clear();
-        await input.sendKeys(numero);
+        await input.click();
+        //await input.clear();
+
+        for (const char of numero) {
+          await input.sendKeys(char);
+          await this.driver.sleep(200);
+        }
 
         await this.driver.sleep(1000);
 
-        const submit = await this.driver.findElement(By.id("submit-member"));
-        await submit.click();
+        // const submit = await this.driver.findElement(By.id("submit-member"));
+        // await submit.click();
+        // await this.driver.sleep(200);
 
         await this.driver.sleep(3000);
         escribirLog(`✅ Usuario ${numero} agregado.`);
