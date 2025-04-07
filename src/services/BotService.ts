@@ -46,22 +46,24 @@ export class BotService {
 
     const agregarMiembros = await this.driver.findElement(By.id("page-4"));
     await agregarMiembros.click();
-    await this.driver.sleep(1000);
+    await this.driver.sleep(800);
 
-    const numero = "1234567890"; // Aquí deberías obtener el número real
-    
+    const numero = "1234567890"; // Cambia esto para obtener el número deseado
+
     const input = await this.driver.findElement(By.id("search-member"));
     await input.click();
     await input.clear();
-    await input.sendKeys(numero);
+
+    for (const char of numero) {
+      await input.sendKeys(char);
+      await this.driver.sleep(300);
+    }
     await input.sendKeys(Key.RETURN);
-    await this.driver.sleep(1000);
+    await this.driver.sleep(600);
     const checkbox = await this.driver.findElement(By.id("contact-checkbox"));
     await checkbox.click();
     await this.driver.sleep(1000);
-    const submitButton = await this.driver.findElement(
-      By.id("submit-member")
-    );
+    const submitButton = await this.driver.findElement(By.id("submit-member"));
     await submitButton.click();
     await this.driver.sleep(1000);
     escribirLog(`✅ Usuario ${numero} agregado.`);
