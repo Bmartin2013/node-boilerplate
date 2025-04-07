@@ -10,7 +10,7 @@ export class BotService {
     await this.driver.get(DRIVER_URL);
     await this.driver.wait(
       until.elementLocated(By.id("community-icon")),
-      10000
+      2000
     );
     escribirLog("✅ WhatsApp Web listo.");
   }
@@ -19,7 +19,7 @@ export class BotService {
     if (!this.driver) throw new Error("Driver no inicializado.");
     escribirLog(`🔎 Abriendo comunidad: ${COMUNIDAD}`);
 
-    await this.driver.sleep(3000);
+    await this.driver.sleep(2000);
     await this.driver.executeScript(`
       const icon = document.getElementById('community-icon');
       if (icon) icon.click();
@@ -55,25 +55,22 @@ export class BotService {
         escribirLog(`➕ Agregando usuario: ${numero} (Intento ${intento})`);
         const input = await this.driver.findElement(By.id("search-member"));
         await input.click();
-        //await input.clear();
+        await input.clear();
+        await input.sendKeys(numero);
+        await input.sendKeys(Key.RETURN);
 
-        for (const char of numero) {
-          await input.sendKeys(char);
-          await this.driver.sleep(200);
-        }
-
-        await this.driver.sleep(1000);
-
-        // const submit = await this.driver.findElement(By.id("submit-member"));
-        // await submit.click();
-        // await this.driver.sleep(200);
-
-        await this.driver.sleep(3000);
+        // Check the checkbox and click the submit button
+        const checkbox = await this.driver.findElement(By.id("contact-checkbox"));
+        await checkbox.click();
+        escribirLog(`✅ Usuario ${numero} seleccionado.`);
+        const submitButton = await this.driver.findElement(By.id("submit-member"));
+        
+        await submitButton.click();
         escribirLog(`✅ Usuario ${numero} agregado.`);
+
         return true;
       } catch (error) {
         escribirLog(`⚠️ Error al agregar ${numero}: ${error}`);
-        await this.driver.sleep(2000);
       }
     }
 
