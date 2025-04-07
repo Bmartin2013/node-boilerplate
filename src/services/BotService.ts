@@ -8,10 +8,7 @@ export class BotService {
   async iniciarNavegador(): Promise<void> {
     this.driver = await new Builder().forBrowser("chrome").build();
     await this.driver.get(DRIVER_URL);
-    await this.driver.wait(
-      until.elementLocated(By.id("community-icon")),
-      2000
-    );
+    await this.driver.wait(until.elementLocated(By.id("community-icon")), 2000);
     escribirLog("✅ WhatsApp Web listo.");
   }
 
@@ -46,37 +43,61 @@ export class BotService {
     const añadirMiembro = await this.driver.findElement(By.id("member-add"));
     await añadirMiembro.click();
     await this.driver.sleep(1000);
+
+    const agregarMiembros = await this.driver.findElement(By.id("page-4"));
+    await agregarMiembros.click();
+    await this.driver.sleep(1000);
+
+    const numero = "1234567890"; // Aquí deberías obtener el número real
+    
+    const input = await this.driver.findElement(By.id("search-member"));
+    await input.click();
+    await input.clear();
+    await input.sendKeys(numero);
+    await input.sendKeys(Key.RETURN);
+    await this.driver.sleep(1000);
+    const checkbox = await this.driver.findElement(By.id("contact-checkbox"));
+    await checkbox.click();
+    await this.driver.sleep(1000);
+    const submitButton = await this.driver.findElement(
+      By.id("submit-member")
+    );
+    await submitButton.click();
+    await this.driver.sleep(1000);
+    escribirLog(`✅ Usuario ${numero} agregado.`);
+    await this.driver.sleep(1000);
   }
 
-  async agregarUsuario(numero: string): Promise<boolean> {
-    if (!this.driver) throw new Error("Driver no inicializado.");
-    for (let intento = 1; intento <= 3; intento++) {
-      try {
-        escribirLog(`➕ Agregando usuario: ${numero} (Intento ${intento})`);
-        const input = await this.driver.findElement(By.id("search-member"));
-        await input.click();
-        await input.clear();
-        await input.sendKeys(numero);
-        await input.sendKeys(Key.RETURN);
+  // async agregarUsuario(numero: string): Promise<boolean> {
+  //   if (!this.driver) throw new Error("Driver no inicializado.");
 
-        // Check the checkbox and click the submit button
-        const checkbox = await this.driver.findElement(By.id("contact-checkbox"));
-        await checkbox.click();
-        escribirLog(`✅ Usuario ${numero} seleccionado.`);
-        const submitButton = await this.driver.findElement(By.id("submit-member"));
-        
-        await submitButton.click();
-        escribirLog(`✅ Usuario ${numero} agregado.`);
+  //   try {
+  //     escribirLog(`➕ Agregando usuario: ${numero}`);
 
-        return true;
-      } catch (error) {
-        escribirLog(`⚠️ Error al agregar ${numero}: ${error}`);
-      }
-    }
+  //     const input = await this.driver.findElement(By.id("search-member"));
+  //     await input.click();
+  //     await input.clear();
+  //     await input.sendKeys(numero);
+  //     await input.sendKeys(Key.RETURN);
 
-    await this.registrarFallido(numero);
-    return false;
-  }
+  //     const checkbox = await this.driver.findElement(By.id("contact-checkbox"));
+  //     await checkbox.click();
+  //     escribirLog(`✅ Usuario ${numero} seleccionado.`);
+
+  //     const submitButton = await this.driver.findElement(
+  //       By.id("submit-member")
+  //     );
+  //     await submitButton.click();
+  //     escribirLog(`✅ Usuario ${numero} agregado.`);
+
+  //     return true;
+  //   } catch (error) {
+  //     escribirLog(`⚠️ Error al agregar ${numero}: ${error}`);
+  //   }
+
+  //   await this.registrarFallido(numero);
+  //   return false;
+  // }
 
   async ejecutarBot(): Promise<void> {
     const usuarios = await this.obtenerUsuarios();
@@ -88,9 +109,9 @@ export class BotService {
     await this.iniciarNavegador();
     await this.buscarComunidad();
 
-    for (const numero of usuarios) {
-      await this.agregarUsuario(numero);
-    }
+    // for (const numero of usuarios) {
+    //   await this.agregarUsuario(numero);
+    // }
 
     escribirLog("🎉 Proceso finalizado.");
   }
