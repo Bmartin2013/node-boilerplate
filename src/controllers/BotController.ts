@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
-import { EMAIL_ERROR, EMAIL_SENT } from "../config/messages";
-import { BotService } from "../services/BotService";
+import { IBotService } from "../interfaces/IBotService";
 
 export class BotController {
-  private botService: BotService;
+  private botService: IBotService;
 
-  constructor(botService: BotService) {
+  constructor(botService: IBotService) {
     this.botService = botService;
   }
 

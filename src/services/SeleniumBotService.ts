@@ -1,8 +1,9 @@
 import { Builder, By, Key, until, WebDriver } from "selenium-webdriver";
 import { escribirLog } from "../utils/logger";
 import { COMUNIDAD, DRIVER_URL } from "../config/dotenv";
+import { IBotService } from "../interfaces/IBotService";
 
-export class BotService {
+export class SeleniumBotService implements IBotService {
   private driver: WebDriver | null = null;
 
   async iniciarNavegador(): Promise<void> {

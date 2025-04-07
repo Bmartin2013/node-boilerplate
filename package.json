@@ -8,12 +8,14 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "fs": "^0.0.1-security",
+    "puppeteer": "^24.6.0",
     "selenium-webdriver": "^4.30.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^22.13.5",
+    "@types/puppeteer": "^5.4.7",
     "@types/selenium-webdriver": "^4.1.28",
     "ts-loader": "^9.5.2",
     "ts-node": "^10.9.2",
