@@ -70,6 +70,11 @@
         margin-bottom: 10px;
       }
 
+      .contact-element {
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
       input {
         width: 100%;
         padding: 10px;
@@ -146,7 +151,7 @@
               />
             </div>
             <h4>Contactos</h4>
-            <div id="contact-1" class="community-element  x10l6tqk xh8yej3 x1g42fcv">
+            <div id="contact-1" class="contact-element x10l6tqk xh8yej3 x1g42fcv hidden">
               <input type="checkbox" id="contact-checkbox" data-icon="checkmark-medium" class="x10l6tqk x8zc4e7 x11uqc5h x78zum5 x6s0dn4 x5yr21d x47corl" style="width: 20px; height: 20px; margin-right: 10px; cursor: pointer;" />
               <div id="community-icon" style="font-size: 2em">🧑‍🧑‍🧒‍🧒</div>
               <p style="margin-left: 10px">Mi Contacto</p>
@@ -249,6 +254,21 @@
             addMembersElement.addEventListener("click", () => {
               toggleVisibility(page3, "hide");
               toggleVisibility(page4, "show");
+            });
+          }
+
+          // Show "Mi Contacto" when input length equals 3
+          const searchMemberInput = document.getElementById("search-member");
+          const contactElement = document.getElementById("contact-1");
+
+          if (searchMemberInput && contactElement) {
+            searchMemberInput.addEventListener("input", () => {
+              if (searchMemberInput.value.length === 3) {
+                toggleVisibility(contactElement, "show");
+                contactElement.style.display = "flex";
+              } else {
+                toggleVisibility(contactElement, "hide");
+              }
             });
           }
         });
