@@ -1,87 +1,85 @@
 import puppeteer, { Browser, Page } from "puppeteer";
 import { escribirLog } from "../utils/logger";
-import { COMUNIDAD, DRIVER_URL } from "../config/dotenv";
+import { COMMUNITY } from "../config/dotenv";
 import { IBotService } from "../interfaces/IBotService";
+import {
+  wait,
+  clickWithWait,
+  typeWithDelay,
+} from "../utils/puppeteerUtils";
+import { BrowserManager } from "../utils/BrowserManager";
+import {
+  COMMUNITY_SELECTORS,
+  SEARCH_MEMBER_SELECTOR,
+} from "../constants/selectors";
+import ApiService from "./ApiServiceMock";
+import { Selector } from "../typings/Selector";
 
 export class PuppeteerBotService implements IBotService {
-  private browser: Browser | null = null;
   private page: Page | null = null;
+  private apiService: ApiService;
 
-  private async wait(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+  constructor() {
+    this.apiService = new ApiService();
   }
 
-  async iniciarNavegador(): Promise<void> {
-    this.browser = await puppeteer.launch({
-      headless: false, // Cambiar a true si querés ocultar el navegador
-      defaultViewport: null,
-      args: ["--start-maximized"],
-    });
-    this.page = await this.browser.newPage();
-    await this.page.goto(DRIVER_URL);
-    await this.page.waitForSelector("#community-icon", { timeout: 2000 });
-    escribirLog("✅ WhatsApp Web listo.");
+  private async init(): Promise<void> {
+    const browserManager = new BrowserManager();
+    const { page } = await browserManager.initBrowser();
+    this.page = page;
   }
 
-  async buscarComunidad(usuarios:string[]): Promise<void> {
-    if (!this.page) throw new Error("Página no inicializada.");
-    escribirLog(`🔎 Abriendo comunidad: ${COMUNIDAD}`);
+  private async addMembersToTheCommunity(members: string[]): Promise<void> {
+    if (!this.page) throw new Error("Page not initialized.");
+    escribirLog(`🔎 Searching community: ${COMMUNITY}`);
 
-    await this.wait(2000);
+    // start the process of adding members
+    await wait(2000);
+    await this.searchCommunity(COMMUNITY_SELECTORS);
+
+    for (const member of members) {
+      await this.typeMember(member, SEARCH_MEMBER_SELECTOR);
+      // add whitespace to simulate enter (TODO: add an enter as well)
+      await this.page.type(SEARCH_MEMBER_SELECTOR.id, " ");
+    }
+  }
+
+  private async searchCommunity(communitySelectors: Selector[]): Promise<void> {
+    if (!this.page) throw new Error("Page not initialized.");
+
+    // TODO: use selector class to avoid hardcoding
     await this.page.evaluate(() => {
       const icon = document.getElementById("community-icon");
       if (icon) (icon as HTMLElement).click();
     });
 
-    await this.wait(1000);
-    await this.page.click("#community-1");
-    await this.wait(1000);
-    await this.page.click("#community-options");
-    await this.wait(1000);
-    await this.page.click("#view-members");
-    await this.wait(1000);
-    await this.page.click("#member-add");
-    await this.wait(1000);
-    await this.page.click("#page-4");
-    await this.wait(800);
-
-    await this.page.click("#search-member");
-    await this.page.$eval("#search-member", input => (input as HTMLInputElement).value = "");
-
-    const numero = "1234567890"; // Cambia esto para obtener el número deseado
-
-    for (const char of numero) {
-      await this.page.type("#search-member", char);
-      await this.wait(300);
+    for (const selector of communitySelectors) {
+      await clickWithWait(this.page, selector);
     }
-
-    await this.page.keyboard.press("Enter");
-    await this.wait(600);
-    await this.page.click("#contact-checkbox");
-
-    await this.page.click("#submit-member");
-    await this.wait(1000);
-
-    escribirLog(`✅ Usuario ${numero} agregado.`);
   }
 
+  private async typeMember(member: string, search: Selector): Promise<void> {
+    if (!this.page) throw new Error("Page not initialized.");
+    await clickWithWait(this.page, search);
+
+    try {
+      await typeWithDelay(this.page, member, search);
+    } catch (err) {
+      escribirLog(`⚠️ Could not add user ${member}: ${err}`);
+    }
+  }
 
   async ejecutarBot(): Promise<void> {
-    const usuarios = await this.obtenerUsuarios();
-    if (usuarios.length === 0) {
-      escribirLog("⚠️ No hay usuarios aprobados.");
+    escribirLog("🔄 Initializing bot...");
+    await this.init();
+
+    const members = await this.apiService.getMembers();
+    if (members.length === 0) {
+      escribirLog("⚠️ No members approved.");
       return;
     }
 
-    await this.iniciarNavegador();
-    await this.buscarComunidad(usuarios);
-
-    await this.wait(1000);
-
-    escribirLog("🎉 Proceso finalizado.");
-  }
-
-  private async obtenerUsuarios(): Promise<string[]> {
-    return ["1234567890", "0987654321"]; // Ejemplo de prueba
+    await this.addMembersToTheCommunity(members);
+    escribirLog("🎉 Tada! all users were successfully added.");
   }
 }

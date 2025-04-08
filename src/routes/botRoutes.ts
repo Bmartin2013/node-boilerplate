@@ -1,11 +1,9 @@
 import express from "express";
 import { BOT_EXECUTE } from "../config/endpoints";
 import { BotController } from "../controllers/BotController";
-import { SeleniumBotService } from "../services/SeleniumBotService";
 import { PuppeteerBotService } from "../services/PuppeteerBotService";
 
 const botRoutes = express.Router();
-//const seleniumBotService = new SeleniumBotService();
 const puppeteerBotService = new PuppeteerBotService(); // Use PuppeteerBotService if needed
 const botController = new BotController(puppeteerBotService);
 
