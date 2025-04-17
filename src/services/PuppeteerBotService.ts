@@ -1,7 +1,7 @@
 import puppeteer, { Page } from "puppeteer";
 import { escribirLog } from "../utils/logger";
 import { IBotService } from "../interfaces/IBotService";
-import { wait, clickWithWait, typeWithDelay } from "../utils/puppeteerUtils";
+import { wait, clickWithWait, typeMember, typeWithEnter } from "../utils/puppeteerUtils";
 import { BrowserManager } from "../utils/BrowserManager";
 import ApiService from "./ApiServiceMock";
 import { Selector } from "../typings/Selector";
@@ -35,9 +35,8 @@ export class PuppeteerBotService implements IBotService {
     await this.searchCommunity(this.selectorsConfig.communitySelectors);
 
     for (const member of members) {
-      await this.typeMember(member, this.selectorsConfig.searchMemberSelector);
-      // add whitespace to simulate enter (TODO: add an enter as well)
-      await this.page.type(this.selectorsConfig.searchMemberSelector.id, " ");
+      await typeMember(this.page, member, this.selectorsConfig.searchMemberSelector);
+      await typeWithEnter(this.page, this.selectorsConfig.searchMemberSelector);
     }
   }
 
@@ -46,24 +45,12 @@ export class PuppeteerBotService implements IBotService {
 
     // TODO: use selector class to avoid hardcoding
     await this.page.evaluate(() => {
-      const selectorName = "community-icon";
-      const icon = document.getElementById(selectorName);
+      const icon = document.querySelector('[aria-label="community-icon"]');
       if (icon) (icon as HTMLElement).click();
     });
 
     for (const selector of communitySelectors) {
       await clickWithWait(this.page, selector);
-    }
-  }
-
-  private async typeMember(member: string, search: Selector): Promise<void> {
-    if (!this.page) throw new Error("Page not initialized.");
-    await clickWithWait(this.page, search);
-
-    try {
-      await typeWithDelay(this.page, member, search);
-    } catch (err) {
-      escribirLog(`⚠️ Could not add user ${member}: ${err}`);
     }
   }
 

@@ -14,7 +14,7 @@ export class BrowserManager {
     });
     this.page = await this.browser.newPage();
     await this.page.goto(pageUrl);
-    await this.page.waitForSelector(selector.id, { timeout: 2000 });
+    await this.page.waitForSelector(`[aria-label="${selector.id}"]`, { timeout: 2000 });
     escribirLog("✅ WhatsApp Web ready.");
     return { browser: this.browser, page: this.page };
   }
