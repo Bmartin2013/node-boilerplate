@@ -6,12 +6,22 @@ export class SelectorsConfig {
   communitySelectors: Selector[];
   searchMemberSelector: Selector;
   community: string;
+  checkboxSelector: Selector;
+  submitSelector: Selector;
+  confirmSubmitSelector: Selector;
+  inviteGroupSelector: Selector;
+  nextSelector: Selector;
 
   constructor(
     pageUrl: string,
     communityIconSelector: Selector,
     communitySelectors: Selector[],
     searchMemberSelector: Selector,
+    checkboxSelector: Selector,
+    submitSelector: Selector,
+    confirmSubmitSelector: Selector,
+    inviteGroupSelector: Selector,
+    nextSelector: Selector,
     community: string
   ) {
     this.pageUrl = pageUrl;
@@ -19,5 +29,10 @@ export class SelectorsConfig {
     this.communitySelectors = communitySelectors;
     this.searchMemberSelector = searchMemberSelector;
     this.community = community;
+    this.checkboxSelector = checkboxSelector
+    this.submitSelector = submitSelector
+    this.confirmSubmitSelector = confirmSubmitSelector
+    this.inviteGroupSelector = inviteGroupSelector
+    this.nextSelector = nextSelector
   }
 }

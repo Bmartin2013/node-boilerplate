@@ -3,7 +3,7 @@ import { BOT_EXECUTE } from "../config/endpoints";
 import { BotController } from "../controllers/BotController";
 import { PuppeteerBotService } from "../services/PuppeteerBotService";
 import ApiService from "../services/ApiServiceMock";
-import { DEFAULT_CONFIG, OLD_DEFAULT_CONFIG } from "../config/selectorsConfig";
+import { OLD_DEFAULT_CONFIG } from "../config/selectorsConfig";
 
 const botRoutes = express.Router();
 const apiService = new ApiService();
