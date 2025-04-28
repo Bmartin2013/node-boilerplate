@@ -34,16 +34,46 @@ export class PuppeteerBotService implements IBotService {
   }
 
   private async addMembersToTheCommunity(members: string[]): Promise<void> {
+    const generalWait = 2000;
     if (!this.page) throw new Error("Page not initialized.");
-    escribirLog(`🔎 Searching community: ${this.selectorsConfig.community}`);
-
     // start the process of adding members
-    await wait(2000);
-    // click on the community icon
-    await clickIfExists(this.page, this.selectorsConfig.communityIconSelector);
-    await this.searchCommunity(this.selectorsConfig.communitySelectors);
+    escribirLog(`➕ add members to the community: ${this.selectorsConfig.community}`);
+    await wait(generalWait);
 
+    // click on the community icon
+    await this.searchCommunity(this.selectorsConfig.communitySelectors);
+    await wait(generalWait);
+
+    // add members to the community
+    await this.addMembers(members);
+    await wait(generalWait);
+
+    // select the checkbox and send the invite
+    await this.selectCheckboxAndSendInvite();
+    await wait(generalWait);
+
+  }
+
+  private async selectCheckboxAndSendInvite(): Promise<void> {
+    if (!this.page) throw new Error("Page not initialized.");
+    escribirLog(`✅ Adding members...`);
+    await selectAndClick(this.page, this.selectorsConfig.checkboxSelector);
+    await clickIfExists(this.page, this.selectorsConfig.submitSelector);
+    await wait(2000);
+    await clickIfExists(this.page, this.selectorsConfig.confirmSubmitSelector);
+    await wait(4000);
+    escribirLog(`📩 Sending the invite...`);
+    await clickIfExists(this.page, this.selectorsConfig.inviteGroupSelector);
+    await wait(2000);
+    await clickIfExists(this.page, this.selectorsConfig.nextSelector);
+  }
+
+  private async addMembers(members: string[]): Promise<void> {
+    if (!this.page) throw new Error("Page not initialized.");
+    escribirLog(`👧🏻👧🏻👧🏻 adding members ${members}`);
     for (const member of members) {
+      escribirLog(`👧🏻 adding NEW member ${member}`);
+      await wait(2000);
       await typeMember(
         this.page,
         member,
@@ -51,20 +81,16 @@ export class PuppeteerBotService implements IBotService {
       );
       await typeWithEnter(this.page, this.selectorsConfig.searchMemberSelector);
     }
-
-    await selectAndClick(this.page, this.selectorsConfig.checkboxSelector);
-    await clickIfExists(this.page, this.selectorsConfig.submitSelector);
-    await wait(2000);
-    await clickIfExists(this.page, this.selectorsConfig.confirmSubmitSelector);
-    await wait(4000);
-    await clickIfExists(this.page, this.selectorsConfig.inviteGroupSelector);
-    await wait(2000);
-    await clickIfExists(this.page, this.selectorsConfig.nextSelector);
   }
 
   private async searchCommunity(communitySelectors: Selector[]): Promise<void> {
     if (!this.page) throw new Error("Page not initialized.");
 
+    // click on the community icon
+    escribirLog(`👯 Clicking on the community icon...`);
+    await clickIfExists(this.page, this.selectorsConfig.communityIconSelector);
+
+    escribirLog(`🔍 Go to the add members modal`);
     for (const selector of communitySelectors) {
       await clickWithWait(this.page, selector);
     }

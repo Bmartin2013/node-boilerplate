@@ -1,6 +1,5 @@
-import { ElementHandle, Page } from "puppeteer";
+import {  Page } from "puppeteer";
 import { Selector } from "../typings/Selector";
-import { escribirLog } from "./logger";
 
 export async function wait(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -55,7 +54,6 @@ export async function selectAndClick(
 ): Promise<void> {
   const { id, type } = checkboxSelector;
 
-  escribirLog(`Seleccionando el elemento con id: ${id}`);
   await wait(1000);
 
   // Desactivar transiciones en la página para evitar problemas con animaciones
@@ -66,7 +64,6 @@ export async function selectAndClick(
   // Esperar a que el checkbox sea visible
   await page.waitForSelector(`[${type}="${id}"]`, { timeout: 5000 });
 
-  escribirLog(`elemento con id ${id} seleccionado y visible`);
   await wait(500);
 
 }
