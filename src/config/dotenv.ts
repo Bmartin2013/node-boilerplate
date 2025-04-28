@@ -11,3 +11,5 @@ export const COMMUNITY_2 = process.env.COMMUNITY_2 || "";
 export const COMMUNITY_3 = process.env.COMMUNITY_3 || "";
 export const COMMUNITY_4 = process.env.COMMUNITY_4 || "";
 export const COMMUNITY_5 = process.env.COMMUNITY_5 || "";
+export const CHROME_EXECUTABLE_PATH = process.env.CHROME_EXECUTABLE_PATH || "";
+export const USER_DATA_DIR = process.env.USER_DATA_DIR || "";

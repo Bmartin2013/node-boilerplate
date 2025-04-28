@@ -50,15 +50,16 @@ export class PuppeteerBotService implements IBotService {
         this.selectorsConfig.searchMemberSelector
       );
       await typeWithEnter(this.page, this.selectorsConfig.searchMemberSelector);
-      await selectAndClick(this.page, this.selectorsConfig.checkboxSelector);
-      await clickIfExists(this.page, this.selectorsConfig.submitSelector);
-      await wait(2000);
-      await clickIfExists(this.page, this.selectorsConfig.confirmSubmitSelector);
-      await wait(4000);
-      await clickIfExists(this.page, this.selectorsConfig.inviteGroupSelector);
-      await wait(2000);
-      await clickIfExists(this.page, this.selectorsConfig.nextSelector);
     }
+
+    await selectAndClick(this.page, this.selectorsConfig.checkboxSelector);
+    await clickIfExists(this.page, this.selectorsConfig.submitSelector);
+    await wait(2000);
+    await clickIfExists(this.page, this.selectorsConfig.confirmSubmitSelector);
+    await wait(4000);
+    await clickIfExists(this.page, this.selectorsConfig.inviteGroupSelector);
+    await wait(2000);
+    await clickIfExists(this.page, this.selectorsConfig.nextSelector);
   }
 
   private async searchCommunity(communitySelectors: Selector[]): Promise<void> {
